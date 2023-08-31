@@ -31,13 +31,14 @@ public class AboutPageSalonInfo extends CommonMethods{
 	String MobileNumberLabel = "//label[text()=\"Mobile number\"]";
 	String LandlineNumberLabel = "//label[text()=\"Landline Number\"]";
     String Mobilenumberfield = "input[formcontrolname=\"mobileNumber\"]";
+    String locvalue;
 	@FindBy (xpath = "//button[text()='Edit']")
 	WebElement edit;
 	
 	@FindBy (xpath = "//div//ul//li//a[text()='Salon-Info']")
 	WebElement SalonInfo;
 	
-	public boolean Labelvalidations() {
+	public boolean Labelvalidations() throws InterruptedException {
 	boolean Namelabel=	MandateLabels(NameLabel);
 	boolean Salontype=	MandateLabels(SalonType);
 	boolean Facilitieslabel=	MandateLabels(FacititiesLabel);
@@ -46,36 +47,45 @@ public class AboutPageSalonInfo extends CommonMethods{
 	boolean Apartmentlabel=	MandateLabels(AprtmentLabel);
 	boolean buildinglabel=	MandateLabels(BuildingCodeLabel);
 	boolean Addresslabel=	MandateLabels(SalonAddressLabel);
-	boolean Descriprionlabel=	Labels(SalonDescriptionLabel);
+	boolean Descriprionlabel=	Labels(SalonDescriptionLabel, "xpath");
 	boolean Mobilenumlabel=	MandateLabels(MobileNumberLabel);
-	boolean Landlinelabel=	Labels(LandlineNumberLabel);
+	boolean Landlinelabel=	Labels(LandlineNumberLabel, "xpath");
 	boolean status = (Namelabel && Salontype && Facilitieslabel && Dealerlabel && Floorlabel && Apartmentlabel && buildinglabel 
 			&& Addresslabel && Descriprionlabel && Mobilenumlabel && Landlinelabel);
 return status;
 	}
 
-	public boolean MandateLabels(String str) {
-
-		boolean label = driver.findElement(By.xpath(str)).isDisplayed();
-		boolean mandatory = driver.findElement(By.xpath(str + "//i")).isDisplayed();
-		boolean status = label && mandatory;
+	public boolean MandateLabels(String str) throws InterruptedException {
+        
+		WebElement label = driver.findElement(By.xpath(str));
+		boolean labeldisplayed = label.isDisplayed();
+		for(int i=1;i<9;i++) {
+			 highlight(label);
+			}
+		WebElement mandatory = driver.findElement(By.xpath(str + "//i"));
+		boolean Mandatedisplayed = mandatory.isDisplayed();
+		for(int i=1;i<9;i++) {
+			 highlight(mandatory);
+			}
+		
+		boolean status = labeldisplayed && Mandatedisplayed;
 		return status;
 	}
 
-	public boolean Labels(String str) {
-		boolean label = driver.findElement(By.xpath(str)).isDisplayed();
-		return label;
+	public boolean Labels(String str, String loctype) throws InterruptedException {
+		WebElement label = driver.findElement(By.xpath(str));
+		boolean labeldisplayed = label.isDisplayed();
+		for(int i=1;i<2;i++) {
+		 highlight(label);
+		}
+		return labeldisplayed;
 		
 	}
-	public String extractmobilenumber() {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", SalonInfo);
-		SalonInfo.click();
-		
-		String script = "var input = document.querySelector('" + Mobilenumberfield
-				+ "'); if (input) return input.value; else return null ;";
-		String mobilenum = (String) ((JavascriptExecutor) driver).executeScript(script);
-		return mobilenum;
-		
+	public String extractmobilenumber() throws InterruptedException {
+		Click(SalonInfo);
+		locvalue = "cssSelector";
+		return getDisabledElements(Mobilenumberfield, locvalue);
+
 	}
 		
 

@@ -12,6 +12,7 @@ public class PageObjectManager {
 	public AboutPageSalonInfo aboutpage;
 	public EditAboutPageSalonInfo editaboutpage;
 	public AboutPagePersonalInfo aboutpersonalinfo;
+	public RegisterPage registerpage;
 	TextContextSetup textContextSetup;
 	WebDriver driver;
 	
@@ -42,6 +43,10 @@ public class PageObjectManager {
 	
 	public AboutPagePersonalInfo getaboutpersonalinfo() {
 		return aboutpersonalinfo = new AboutPagePersonalInfo(driver);
+	}
+	
+	public RegisterPage getregisterpage() {
+		return  registerpage = new RegisterPage(driver);
 	}
 
 }

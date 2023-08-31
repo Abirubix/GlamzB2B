@@ -33,11 +33,10 @@ public class LoginPage extends CommonMethods{
 	
 	
 	public void loginwithmail(String email, String password) throws IOException, InterruptedException {
-		
-		loginwithmailbtn.click();
-		useremail.sendKeys(email);
-		userpassword.sendKeys(password);
-		loginbtn.click();
+		clickelement(loginwithmailbtn);
+		Enter(useremail, email);
+		Enter(userpassword, password);
+		Click(loginbtn);
 	}
 	
 	

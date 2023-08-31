@@ -20,31 +20,26 @@ public	WebDriver driver;
 		Properties prop = new Properties();
 		prop.load(fis);
 		String url = prop.getProperty("QAURL");
-		System.out.println(url);
 		if(driver == null) {
 			if(prop.getProperty("browser").equalsIgnoreCase("chrome")) {
-				System.out.println(prop.getProperty("browser").toString());
 		driver = new ChromeDriver();
 		driver.get(url);
 		driver.manage().window().maximize();
 			
 		}
 			if(prop.getProperty("browser").equalsIgnoreCase("firefox")) {
-				System.out.println(prop.getProperty("browser").toString());
 		driver = new FirefoxDriver();
 		driver.get(url);
 		driver.manage().window().maximize();
 			
 		}
 			if(prop.getProperty("browser").equalsIgnoreCase("safari")) {
-				System.out.println(prop.getProperty("browser").toString());
 		driver = new SafariDriver();
 		driver.get(url);
 		driver.manage().window().maximize();
 			
 		}
 			if(prop.getProperty("browser").equalsIgnoreCase("edge")) {
-				System.out.println(prop.getProperty("browser").toString());
 		driver = new EdgeDriver();
 		driver.get(url);
 		driver.manage().window().maximize();

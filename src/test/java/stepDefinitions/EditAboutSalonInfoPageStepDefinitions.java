@@ -19,7 +19,6 @@ public class EditAboutSalonInfoPageStepDefinitions {
 	}
 	@When("User clicks edit button and verify all fields are enabled")
 	public void user_clicks_edit_button_and_verify_all_fields_are_enabled() throws InterruptedException {
-		textContextSetup.genericutils.sleep();
 	   editaboutpage=textContextSetup.pageobjectmanager.geteditaboutpage();
 		Thread.sleep(2000);
 
@@ -45,6 +44,7 @@ public class EditAboutSalonInfoPageStepDefinitions {
 	
 	@Then("User clicks on edit button")
 	public void user_clicks_on_edit_button() throws InterruptedException {
+		Thread.sleep(3000);
 	 editaboutpage.clickonedit();
 	}
 	@Then("User clicks on cancel button and checks wether the previously given data is present")
