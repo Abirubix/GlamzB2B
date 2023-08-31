@@ -1,6 +1,5 @@
 package pageobjects;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,21 +19,17 @@ public class AboutPagePersonalInfo extends CommonMethods {
 @FindBy (xpath="//*[@id=\"navbar\"]/ul/li[2]")
 WebElement PersonalInfo;
 
-
+String locvalue;
 String mobilenumber = "input[placeholder=\"CURRENT MOBILE NUMBER\"]";
 
-public void clickonpersonalinfo() {
+public void clickonpersonalinfo() throws InterruptedException {
 
-	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", PersonalInfo);
-	PersonalInfo.click();
+	Click(PersonalInfo);
 }
 public String extractmobilenumber() throws InterruptedException {
     clickonpersonalinfo();
-	
-	String script = "var input = document.querySelector('" + mobilenumber
-			+ "'); if (input) return input.value; else return null ;";
-	String mobilenum = (String) ((JavascriptExecutor) driver).executeScript(script);
-	return mobilenum;
+    locvalue = "cssSelector";
+   return  getDisabledElements(mobilenumber, locvalue);
 	
 }
 }

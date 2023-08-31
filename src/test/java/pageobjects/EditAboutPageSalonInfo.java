@@ -75,16 +75,16 @@ public class EditAboutPageSalonInfo extends CommonMethods{
 	WebElement LandLine;
 
 	public void clickonedit() throws InterruptedException {
-		editbtn.click();
+		highlight(editbtn);
+		Click(editbtn);
+      //  Thread.sleep(1000);
 
 	}
 
 	public void clickonsave() throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", savebtn);
-        WaitForElementVisible(savebtn);
-
-		savebtn.click();
-
+		highlight(savebtn);
+		Click(savebtn);
+      //  Thread.sleep(1000);
 	}
 
 	public boolean checkfieldsenabled() {
@@ -118,11 +118,18 @@ public class EditAboutPageSalonInfo extends CommonMethods{
 	public void editdropdownvalidations() {
 
 		Stream.of(salonTypeclearall, salonTypearrow, salontypefirstoption, Facilitiesclearall, Facilitiesarrow,
-				Facilitiesfirstoption, DealerTypeclearall, DealerTypearrow, DealerTypefirstoption).forEach(s -> s.click());
+				Facilitiesfirstoption, DealerTypeclearall, DealerTypearrow, DealerTypefirstoption).forEach(s -> {
+					try {
+						Click(s);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				});
 
 	}
 
 	public void edits(WebElement ele, String str) {
+		highlight(ele);
 		ele.clear();
 		ele.sendKeys(str);
 	}

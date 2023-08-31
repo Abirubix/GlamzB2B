@@ -29,12 +29,11 @@ public class AboutPersonalInfoPageStepDefintions {
 //        AboutPageSalonInfo aboutsaloninfo = textContextSetup.pageobjectmanager.getaboutpage();
 //        String saloninfonumber = aboutsaloninfo.extractmobilenumber();
         aboutpersonalinfo = textContextSetup.pageobjectmanager.getaboutpersonalinfo();
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         String personalinfonumber = aboutpersonalinfo.extractmobilenumber();
+        System.out.println(personalinfonumber+"::personalinfonumber");
+        System.out.println(textContextSetup.mobilenumbersaloninfo+"::textContextSetup.mobilenumbersaloninfo");
 		Assert.assertEquals(textContextSetup.mobilenumbersaloninfo,personalinfonumber );
-		System.out.println("mobilenumbersaloninfo::"+textContextSetup.mobilenumbersaloninfo);
-		System.out.println("mobienumberpersonalinfo::"+personalinfonumber);
-	
 	}
 	
 	

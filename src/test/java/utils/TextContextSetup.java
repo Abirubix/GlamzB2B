@@ -19,8 +19,8 @@ public class TextContextSetup {
 		
 		
 		testbase = new TestBase();
-		pageobjectmanager = new PageObjectManager(testbase.Webdrivermanager());
-		genericutils = new GenericUtils(testbase.Webdrivermanager());
+		pageobjectmanager = new PageObjectManager(testbase.Webdrivermanager()); //driver 
+		//genericutils = new GenericUtils(testbase.Webdrivermanager());
 	}
 	
 }

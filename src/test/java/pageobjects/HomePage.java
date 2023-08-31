@@ -1,5 +1,6 @@
 package pageobjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,13 +24,25 @@ public class HomePage extends CommonMethods {
 	@FindBy (xpath = "//a[contains(@href,'/about')]")
 	WebElement Aboutbtn;
 	
+	@FindBy (xpath = "//span[text()='Gallery']")
+	WebElement Gallerybtn;
 	
+	@FindBy (xpath = "//div//ul//li//a[text()='Salon-Info']")
+	WebElement SalonInfo;
+
+
 	
 	public void clickonabout() throws InterruptedException  {
 		WaitForElementVisible(Setupbtn);
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",Setupbtn);
-		Setupbtn.click();
+		Click(Setupbtn);
 		WaitForElementVisible(Aboutbtn);
-		Aboutbtn.click();
+		Click(Aboutbtn);
+		WaitForElementVisible(SalonInfo);
+	}
+	
+	public void clickGallerybtn() throws InterruptedException {
+		WaitForElementVisible(Gallerybtn);
+		Click(Gallerybtn);
+		
 	}
 }
