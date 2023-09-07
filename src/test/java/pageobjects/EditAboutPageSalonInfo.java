@@ -3,6 +3,7 @@ package pageobjects;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import utils.CommonMethods;
 
-public class EditAboutPageSalonInfo extends CommonMethods{
+public class EditAboutPageSalonInfo extends CommonMethods {
 	public WebDriver driver;
 
 	public EditAboutPageSalonInfo(WebDriver driver) {
@@ -20,8 +21,32 @@ public class EditAboutPageSalonInfo extends CommonMethods{
 		PageFactory.initElements(driver, this);
 	}
 
+	@FindBy(xpath = "//div//div[1]//div//input[@formcontrolname='contactNumber']")
+	WebElement addonemorephonefirstfield;
+
+	@FindBy(xpath = "//div[@class='col-md-12']//div[1]//div[1]//ngb-alert[1]//div[1]//span[1]")
+	WebElement addonemorephonefirsterrormsg;
+
+	@FindBy(xpath = "(//div[2]//div[1]//div[1]//ngb-alert[1]//div[1]//span[1])[2]")
+	WebElement addonemorephoneseconderrormsg;
+
+	@FindBy(xpath = "//div//div[3]//div//input[@formcontrolname='contactNumber']")
+	WebElement addonemorephonesecondfield;
+
+	@FindBy(xpath = "//div//button[text()='Add one more phone ']")
+	WebElement addonemorephone;
+
+	@FindBy(xpath = "//div[@class='row w-100']//div[2]//div//i")
+	WebElement deleteextraphone;
+
+	@FindBy(xpath = "//div[@role='dialog']//div//button[text()='Yes']")
+	WebElement confirmdelete;
+
 	@FindBy(xpath = "//button[normalize-space()='Save']")
 	WebElement savebtn;
+
+	@FindBy(id = "toast-container")
+	WebElement toastcontainer;
 
 	@FindBy(xpath = "//button[text()='Edit']")
 	WebElement editbtn;
@@ -73,18 +98,21 @@ public class EditAboutPageSalonInfo extends CommonMethods{
 
 	@FindBy(xpath = "//input[@formcontrolname=\"landlineNumber\"]")
 	WebElement LandLine;
+	
+	@FindBy(xpath = "//div[@aria-label='Updated Successfully']")
+	WebElement updatedsuccesfullymsg;
 
 	public void clickonedit() throws InterruptedException {
 		highlight(editbtn);
 		Click(editbtn);
-      //  Thread.sleep(1000);
+		// Thread.sleep(1000);
 
 	}
 
 	public void clickonsave() throws InterruptedException {
 		highlight(savebtn);
 		Click(savebtn);
-      //  Thread.sleep(1000);
+		toastcontainer.isDisplayed();
 	}
 
 	public boolean checkfieldsenabled() {
@@ -115,8 +143,7 @@ public class EditAboutPageSalonInfo extends CommonMethods{
 		edits(LandLine, str.get(6));
 	}
 
-	public void editdropdownvalidations() {
-
+	public void editdropdownvalidations() throws InterruptedException {
 		Stream.of(salonTypeclearall, salonTypearrow, salontypefirstoption, Facilitiesclearall, Facilitiesarrow,
 				Facilitiesfirstoption, DealerTypeclearall, DealerTypearrow, DealerTypefirstoption).forEach(s -> {
 					try {
@@ -128,9 +155,63 @@ public class EditAboutPageSalonInfo extends CommonMethods{
 
 	}
 
+	public void deleteExtraPhone() throws InterruptedException {
+		Click(deleteextraphone);
+		Click(confirmdelete);
+	}
+
 	public void edits(WebElement ele, String str) {
 		highlight(ele);
 		ele.clear();
 		ele.sendKeys(str);
 	}
+
+	public void clickonaddphone() throws InterruptedException {
+		Click(addonemorephone);
+	}
+
+	public void addOneMorePhoneNotVisible() {
+		waitForElementInvisible(addonemorephone);
+	}
+
+	public String enterAdditionalFirstPhoneWithError(String string) throws InterruptedException {
+		Enter(addonemorephonefirstfield, string);
+		highlight(addonemorephonefirsterrormsg);
+		return addonemorephonefirsterrormsg.getText();
+	}
+
+	public String enterAdditionalSecondPhoneWithError(String string) throws InterruptedException {
+		Enter(addonemorephonesecondfield, string);
+		Thread.sleep(2000);
+		highlight(addonemorephoneseconderrormsg);
+		return addonemorephoneseconderrormsg.getText();
+
+	}
+
+	public void editAdditionalPhoneFirstField(String string) throws InterruptedException {
+		Clear(addonemorephonefirstfield);
+		Enter(addonemorephonefirstfield, string);
+		waitForElementInvisible(addonemorephonefirsterrormsg);
+	}
+
+	public void editAdditionalPhoneSecondField(String string) throws InterruptedException {
+		Clear(addonemorephonesecondfield);
+		Enter(addonemorephonesecondfield, string);
+		waitForElementInvisible(addonemorephoneseconderrormsg);
+	}
+
+	public void deleteFirstAdditionalPhoneNumber() throws InterruptedException {
+		Click(deleteextraphone);
+		Click(confirmdelete);
+	}
+
+	public void addOneMorePhoneVisible() {
+		addonemorephone.isDisplayed();
+	}
+
+	public void succesfullyAddedMsg() {
+		WaitForElementVisible(updatedsuccesfullymsg);
+		waitForElementInvisible(updatedsuccesfullymsg);
+	}
+
 }

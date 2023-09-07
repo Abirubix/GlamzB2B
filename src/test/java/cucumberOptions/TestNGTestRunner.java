@@ -6,7 +6,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(features="features/AboutPage", glue="stepDefinitions", 
-monochrome = false,tags = "@EditAboutSalonInfo", plugin= {"html:target/cucumber.html","json:target/cucumber.json",
+monochrome = false, plugin= {"html:target/cucumber.html","json:target/cucumber.json",
 		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 		"rerun:target/failed_scenarios.txt", "pretty"})
 public class TestNGTestRunner extends AbstractTestNGCucumberTests {
