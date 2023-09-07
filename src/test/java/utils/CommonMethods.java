@@ -20,6 +20,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -38,6 +39,7 @@ public class CommonMethods {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].style.border='2px solid blue'", ele);
 	}
+
 	public void highlight(By locator) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].style.border='2px solid blue'", locator);
@@ -47,61 +49,60 @@ public class CommonMethods {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].setAttribute('style','border:; background;');", ele);
 	}
-	
-	public String getDisabledElements(String locatorvalue,String locatortype) throws InterruptedException {
+
+	public String getDisabledElements(String locatorvalue, String locatortype) throws InterruptedException {
 		String script = "var input = document.querySelector('" + locatorvalue
 				+ "'); if (input) return input.value; else return null ;";
 		String value = (String) ((JavascriptExecutor) driver).executeScript(script);
 
-		highlightText(locatorvalue,locatortype );
+		highlightText(locatorvalue, locatortype);
 		return value;
 	}
-	
+
 	public void highlightText(String locatorvalue, String locatortype) throws InterruptedException {
-		if(locatortype.equalsIgnoreCase("cssSelector")) {
-			WebElement element =  driver.findElement(By.cssSelector(locatorvalue));
+		if (locatortype.equalsIgnoreCase("cssSelector")) {
+			WebElement element = driver.findElement(By.cssSelector(locatorvalue));
 			scrollToElement(element);
 		}
-		if(locatortype.equalsIgnoreCase("xpath")) {
-			WebElement element =  driver.findElement(By.xpath(locatorvalue));
+		if (locatortype.equalsIgnoreCase("xpath")) {
+			WebElement element = driver.findElement(By.xpath(locatorvalue));
 			scrollToElement(element);
 		}
-		if(locatortype.equalsIgnoreCase("id")) {
-			WebElement element =  driver.findElement(By.id(locatorvalue));
+		if (locatortype.equalsIgnoreCase("id")) {
+			WebElement element = driver.findElement(By.id(locatorvalue));
 			scrollToElement(element);
 		}
-		if(locatortype.equalsIgnoreCase("linktext")) {
-			WebElement element =  driver.findElement(By.linkText(locatorvalue));
+		if (locatortype.equalsIgnoreCase("linktext")) {
+			WebElement element = driver.findElement(By.linkText(locatorvalue));
 			scrollToElement(element);
 		}
-		if(locatortype.equalsIgnoreCase("classname")) {
-			WebElement element =  driver.findElement(By.className(locatorvalue));
+		if (locatortype.equalsIgnoreCase("classname")) {
+			WebElement element = driver.findElement(By.className(locatorvalue));
 			scrollToElement(element);
 		}
-		if(locatortype.equalsIgnoreCase("tagname")) {
-			WebElement element =  driver.findElement(By.tagName(locatorvalue));
+		if (locatortype.equalsIgnoreCase("tagname")) {
+			WebElement element = driver.findElement(By.tagName(locatorvalue));
 			scrollToElement(element);
 		}
-		if(locatortype.equalsIgnoreCase("partiallinktext")) {
-			WebElement element =  driver.findElement(By.partialLinkText(locatorvalue));
+		if (locatortype.equalsIgnoreCase("partiallinktext")) {
+			WebElement element = driver.findElement(By.partialLinkText(locatorvalue));
 			scrollToElement(element);
 		}
-		if(locatortype.equalsIgnoreCase("name")) {
-			WebElement element =  driver.findElement(By.name(locatorvalue));
+		if (locatortype.equalsIgnoreCase("name")) {
+			WebElement element = driver.findElement(By.name(locatorvalue));
 			scrollToElement(element);
 		}
-		
+
 	}
 
 	public void sleep() throws InterruptedException {
 		Thread.sleep(10000);
 	}
 
-
 	public void Click(WebElement element) throws InterruptedException {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
 		highlight(element);
-        element.click();
+		element.click();
 	}
 
 	public void clickelement(WebElement Ele) {
@@ -137,11 +138,29 @@ public class CommonMethods {
 
 	}
 
-	// method to delete the default value of text field
+	public void Clear(WebElement element) {
+		highlight(element);
+		element.clear();
+	}
+
 	public void clear_default(WebElement element) {
 		highlight(element);
+		Actions a =new Actions(driver); 
+		a.click(element).build().perform();
 		element.sendKeys(Keys.CONTROL + "a");
+		element.sendKeys(Keys.COMMAND + "a");
 		element.sendKeys(Keys.DELETE);
+	}
+
+	public void isDisplayed(WebElement element) {
+		highlight(element);
+		element.isDisplayed();
+	}
+
+	public void isEnabled(WebElement element) {
+		highlight(element);
+
+	   element.isEnabled();
 	}
 
 	// Method to select option from Dropdown
@@ -159,10 +178,17 @@ public class CommonMethods {
 		}
 	}
 
-	public static void waitForElement(WebDriver driver, WebElement element) {
+	public void waitForElementInvisible(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait.until(ExpectedConditions.invisibilityOf(element));
+	}
+
+	public void waitForElement(WebDriver driver, WebElement element) {
 		FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(30))
 				.pollingEvery(Duration.ofMillis(500)).ignoring(NoSuchElementException.class);
 		wait.until(ExpectedConditions.visibilityOf(element));
+		highlight(element);
+
 	}
 
 	// Method to wait for Element- Implicit Wait
@@ -228,7 +254,7 @@ public class CommonMethods {
 	}
 
 	// Method to wait for list of Element
-	public void WaitForElement(By elementLocator) {
+	public void WaitForElementby(By elementLocator) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(elementLocator));
 		wait.until(ExpectedConditions.elementToBeClickable(elementLocator));
@@ -236,7 +262,7 @@ public class CommonMethods {
 
 	}
 
-	public void WaitForElement1(WebElement element) {
+	public void WaitForElement(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOf(element));
 		highlight(element);
@@ -336,8 +362,8 @@ public class CommonMethods {
 
 	// Method to select checkbox
 	public void selectCheckbox(WebElement element) {
-		JavascriptExecutor js =  (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].click();",element);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", element);
 		highlight(element);
 
 	}
@@ -373,7 +399,6 @@ public class CommonMethods {
 
 		System.out.println("Both lists are equal----" + Match);
 	}
-
 
 	public boolean compareTable(List<WebElement> actual, List<WebElement> expected) {
 		return actual.stream().map(WebElement::getText).sorted().collect(Collectors.toList())

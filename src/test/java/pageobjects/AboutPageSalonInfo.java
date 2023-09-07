@@ -31,12 +31,16 @@ public class AboutPageSalonInfo extends CommonMethods{
 	String MobileNumberLabel = "//label[text()=\"Mobile number\"]";
 	String LandlineNumberLabel = "//label[text()=\"Landline Number\"]";
     String Mobilenumberfield = "input[formcontrolname=\"mobileNumber\"]";
+    String AdditionalMobileNumber = "//label[@for='required' and text() = 'Additional mobile number ']";
     String locvalue;
 	@FindBy (xpath = "//button[text()='Edit']")
 	WebElement edit;
 	
 	@FindBy (xpath = "//div//ul//li//a[text()='Salon-Info']")
 	WebElement SalonInfo;
+	
+	@FindBy (xpath = "//div[contains(text(),'These phones')]")
+	WebElement Messagebox;
 	
 	public boolean Labelvalidations() throws InterruptedException {
 	boolean Namelabel=	MandateLabels(NameLabel);
@@ -50,8 +54,9 @@ public class AboutPageSalonInfo extends CommonMethods{
 	boolean Descriprionlabel=	Labels(SalonDescriptionLabel, "xpath");
 	boolean Mobilenumlabel=	MandateLabels(MobileNumberLabel);
 	boolean Landlinelabel=	Labels(LandlineNumberLabel, "xpath");
+	boolean AdditionalPhoneLabel = Labels(AdditionalMobileNumber,"xpath");
 	boolean status = (Namelabel && Salontype && Facilitieslabel && Dealerlabel && Floorlabel && Apartmentlabel && buildinglabel 
-			&& Addresslabel && Descriprionlabel && Mobilenumlabel && Landlinelabel);
+			&& Addresslabel && Descriprionlabel && Mobilenumlabel && Landlinelabel && AdditionalPhoneLabel);
 return status;
 	}
 
@@ -75,7 +80,7 @@ return status;
 	public boolean Labels(String str, String loctype) throws InterruptedException {
 		WebElement label = driver.findElement(By.xpath(str));
 		boolean labeldisplayed = label.isDisplayed();
-		for(int i=1;i<2;i++) {
+		for(int i=1;i<3;i++) {
 		 highlight(label);
 		}
 		return labeldisplayed;
@@ -86,6 +91,15 @@ return status;
 		locvalue = "cssSelector";
 		return getDisabledElements(Mobilenumberfield, locvalue);
 
+	}
+
+	public void verifyMesageBox() {
+		
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;  
+		jsExecutor.executeScript("arguments[0].style.border='2px solid red'", Messagebox);    
+		 System.out.println(Messagebox.getText());
+		 highlight(Messagebox);
+		isDisplayed(Messagebox);
 	}
 		
 

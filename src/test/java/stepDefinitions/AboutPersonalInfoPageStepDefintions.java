@@ -36,5 +36,18 @@ public class AboutPersonalInfoPageStepDefintions {
 		Assert.assertEquals(textContextSetup.mobilenumbersaloninfo,personalinfonumber );
 	}
 	
-	
+	@Given("User verifies all the titles in the page")
+	public void user_verifies_all_the_titles_in_the_page() {
+		aboutpersonalinfo.verifyTitles();
+	}
+	@Then("User verifies Recieve sms notification button")
+	public void user_verifies_recieve_sms_notification_button() {
+		aboutpersonalinfo.verifySms();
+	}
+	@Then("User verifies all the texts in personal info page")
+	public void user_verifies_all_the_texts_in_personal_info_page() throws InterruptedException {
+		aboutpersonalinfo.textVerification();
+		Thread.sleep(3000);
+
+	}
 }

@@ -31,5 +31,12 @@ public class AboutSalonInfoPageStepDefinitions {
 		textContextSetup.mobilenumbersaloninfo = aboutpage.extractmobilenumber();
 	}
 	
+	@Then("User verifies whether message box is dispalyed")
+	public void user_verifies_whether_message_box_is_dispalyed() throws InterruptedException {
+        aboutpage.verifyMesageBox();
+		Thread.sleep(5000);
+
+	}
+	
 
 }

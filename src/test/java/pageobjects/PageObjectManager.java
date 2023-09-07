@@ -6,6 +6,7 @@ import utils.TextContextSetup;
 
 public class PageObjectManager {
 
+	
 	public GlamzLandingPage glamzlandingpage;
 	public HomePage homepage;
 	public LoginPage loginpage;
@@ -13,6 +14,10 @@ public class PageObjectManager {
 	public EditAboutPageSalonInfo editaboutpage;
 	public AboutPagePersonalInfo aboutpersonalinfo;
 	public RegisterPage registerpage;
+	public AboutPagePersonalInfoName aboutpersonalinfonamepage;
+	public AboutPagePersonalInfoEmail aboutpersonalinfoemailpage;
+	public AboutPagePersonalInfoPhone aboutpersonalinfophonepage;
+	public AboutPagePersonalInfoPassword aboutpersonalinfopasswordpage;
 	TextContextSetup textContextSetup;
 	WebDriver driver;
 	
@@ -47,6 +52,22 @@ public class PageObjectManager {
 	
 	public RegisterPage getregisterpage() {
 		return  registerpage = new RegisterPage(driver);
+	}
+	
+	public AboutPagePersonalInfoName getaboutpersonalinfoname() {
+		return  aboutpersonalinfonamepage = new AboutPagePersonalInfoName(driver);
+	}
+	
+	public AboutPagePersonalInfoEmail getaboutpersonalinfoemail() {
+		return  aboutpersonalinfoemailpage = new AboutPagePersonalInfoEmail(driver);
+	}
+	
+	public AboutPagePersonalInfoPhone getaboutpersonalinfophone() {
+		return  aboutpersonalinfophonepage = new AboutPagePersonalInfoPhone(driver);
+	}
+	
+	public AboutPagePersonalInfoPassword getaboutpersonalinfopassword() {
+		return  aboutpersonalinfopasswordpage = new AboutPagePersonalInfoPassword(driver);
 	}
 
 }
